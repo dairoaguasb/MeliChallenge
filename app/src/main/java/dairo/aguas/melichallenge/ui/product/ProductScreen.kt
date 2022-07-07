@@ -13,11 +13,15 @@ import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.state.ProductState
 
 @Composable
-fun ProductScreen() {
+fun ProductScreen(lazyGridState: LazyGridState) {
+    ProductScreenStates(
+        productState = ProductState(),
+        lazyGridState = lazyGridState
+    )
 }
 
 @Composable
-private fun ProductsState(
+private fun ProductScreenStates(
     productState: ProductState,
     lazyGridState: LazyGridState
 ) {
@@ -39,9 +43,9 @@ private fun ProductsState(
 
 @Preview
 @Composable
-private fun ProductsStateSuccessPreview() {
+private fun ProductScreenStatesSuccessPreview() {
     MeliChallengeScreen {
-        ProductsState(
+        ProductScreenStates(
             productState = ProductState(
                 products = listOf(
                     ProductViewData(
@@ -88,9 +92,9 @@ private fun ProductsStateSuccessPreview() {
 
 @Preview
 @Composable
-private fun ProductsStateLoadingPreview() {
+private fun ProductScreenStatesLoadingPreview() {
     MeliChallengeScreen {
-        ProductsState(
+        ProductScreenStates(
             productState = ProductState(loading = true),
             lazyGridState = rememberLazyGridState()
         )
@@ -99,9 +103,9 @@ private fun ProductsStateLoadingPreview() {
 
 @Preview
 @Composable
-private fun ProductsStateErrorPreview() {
+private fun ProductScreenStatesErrorPreview() {
     MeliChallengeScreen {
-        ProductsState(
+        ProductScreenStates(
             productState = ProductState(error = R.string.error_time_out),
             lazyGridState = rememberLazyGridState()
         )

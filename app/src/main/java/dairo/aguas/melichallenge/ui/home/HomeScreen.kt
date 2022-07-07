@@ -2,7 +2,6 @@ package dairo.aguas.melichallenge.ui.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -13,23 +12,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import dairo.aguas.melichallenge.ui.common.EmptyState
 import dairo.aguas.melichallenge.ui.common.SearchLayout
 import dairo.aguas.melichallenge.ui.product.ProductListScreen
 import dairo.aguas.melichallenge.ui.theme.MeliChallengeTheme
 
 @Composable
 fun HomeApp() {
-    val lazyGridState = rememberLazyGridState()
     MeliChallengeScreen {
+        var searchProduct by remember { mutableStateOf("") }
         var searchText by remember { mutableStateOf("") }
         Column {
-            SearchLayout(searchText) {
-                searchText = it
+            SearchLayout(
+                value = searchText,
+                onValueChange = { searchText = it }
+            ) {
+                searchProduct = searchText
             }
-            ProductListScreen(
-                viewModel = hiltViewModel(),
-                lazyGridState = lazyGridState
-            )
+
+            if (searchProduct.isEmpty()) {
+                EmptyState()
+            } else {
+                ProductListScreen(
+                    searchProduct,
+                    viewModel = hiltViewModel()
+                )
+            }
         }
     }
 }

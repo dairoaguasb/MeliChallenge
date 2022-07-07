@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,10 +16,7 @@ import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 import dairo.aguas.melichallenge.ui.model.ProductViewData
 
 @Composable
-fun ProductList(
-    products: List<ProductViewData>,
-    lazyGridState: LazyGridState
-) {
+fun ProductList(products: List<ProductViewData>) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -30,8 +25,7 @@ fun ProductList(
         if (products.isNotEmpty()) {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(150.dp),
-                contentPadding = PaddingValues(4.dp),
-                state = lazyGridState
+                contentPadding = PaddingValues(4.dp)
             ) {
                 items(products) {
                     CardProduct(productViewData = it)
@@ -82,8 +76,7 @@ fun ProductListPreview() {
                     thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
                     freeShipping = true
                 )
-            ),
-            lazyGridState = rememberLazyGridState()
+            )
         )
     }
 }

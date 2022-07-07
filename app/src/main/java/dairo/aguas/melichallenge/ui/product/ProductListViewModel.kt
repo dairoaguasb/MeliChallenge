@@ -28,10 +28,6 @@ class ProductListViewModel @Inject constructor(
     private val _state = MutableStateFlow(ProductState())
     val state: StateFlow<ProductState> = _state.asStateFlow()
 
-    init {
-        searchProductList("Televisor")
-    }
-
     fun searchProductList(searchPattern: String) {
         searchProductListUseCase.invoke(searchPattern).map { result ->
             result.fold(

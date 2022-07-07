@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface HomeAPI {
 
     @GET(SEARCH_PRODUCTS)
-    suspend fun searchProduct(@Query("q") searchPattern: String): ProductResponseDTO
+    suspend fun searchProductList(@Query("q") searchPattern: String): ProductResponseDTO
 }
 
 private const val SEARCH_PRODUCTS = "sites/MLA/search?"

@@ -3,6 +3,8 @@ package dairo.aguas.melichallenge.ui.product
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dairo.aguas.melichallenge.R
@@ -13,9 +15,13 @@ import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.state.ProductState
 
 @Composable
-fun ProductScreen(lazyGridState: LazyGridState) {
+fun ProductListScreen(
+    viewModel: ProductListViewModel,
+    lazyGridState: LazyGridState
+) {
+    val productState by viewModel.state.collectAsState()
     ProductScreenStates(
-        productState = ProductState(),
+        productState = productState,
         lazyGridState = lazyGridState
     )
 }

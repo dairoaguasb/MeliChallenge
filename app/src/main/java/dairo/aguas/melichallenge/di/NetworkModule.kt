@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dairo.aguas.melichallenge.BuildConfig
+import dairo.aguas.melichallenge.data.endpoint.ProductAPI
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Dispatcher
 import okhttp3.Interceptor
@@ -56,6 +57,11 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun productAPIProvider(retrofit: Retrofit): ProductAPI =
+        retrofit.create(ProductAPI::class.java)
 }
 
 private const val MAX_REQUEST = 1

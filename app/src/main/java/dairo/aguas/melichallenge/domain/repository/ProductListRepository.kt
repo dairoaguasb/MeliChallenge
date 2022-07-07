@@ -4,7 +4,7 @@ import dairo.aguas.melichallenge.domain.model.Product
 import dairo.aguas.melichallenge.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 
-interface HomeRepository {
+interface ProductListRepository {
 
     fun searchProductList(searchPattern: String): Flow<Result<List<Product>>>
 }

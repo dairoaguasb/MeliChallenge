@@ -12,8 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import dairo.aguas.melichallenge.ui.common.SearchLayout
-import dairo.aguas.melichallenge.ui.product.ProductScreen
+import dairo.aguas.melichallenge.ui.product.ProductListScreen
 import dairo.aguas.melichallenge.ui.theme.MeliChallengeTheme
 
 @Composable
@@ -25,7 +26,10 @@ fun HomeApp() {
             SearchLayout(searchText) {
                 searchText = it
             }
-            ProductScreen(lazyGridState)
+            ProductListScreen(
+                viewModel = hiltViewModel(),
+                lazyGridState = lazyGridState
+            )
         }
     }
 }

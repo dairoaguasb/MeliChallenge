@@ -12,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,14 +27,11 @@ fun CardProduct(
     productViewData: ProductViewData,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier.padding(4.dp)
-    ) {
+    Card(modifier = modifier.padding(4.dp)) {
         Column {
             Image(
                 painter = rememberAsyncImagePainter(productViewData.thumbnail),
                 contentDescription = productViewData.title,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.LightGray)
@@ -59,14 +55,16 @@ fun CardProduct(
                     .padding(4.dp)
                     .fillMaxWidth()
             )
-            Text(
-                color = GreenFreeShipping,
-                text = stringResource(R.string.free_shipping),
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth()
-            )
+            if (productViewData.freeShipping) {
+                Text(
+                    color = GreenFreeShipping,
+                    text = stringResource(R.string.free_shipping),
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                )
+            }
         }
     }
 }

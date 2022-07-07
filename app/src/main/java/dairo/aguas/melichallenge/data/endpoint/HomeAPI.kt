@@ -4,7 +4,7 @@ import dairo.aguas.melichallenge.data.model.ProductResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ProductAPI {
+interface HomeAPI {
 
     @GET(SEARCH_PRODUCTS)
     suspend fun searchProduct(@Query("q") searchPattern: String): ProductResponseDTO

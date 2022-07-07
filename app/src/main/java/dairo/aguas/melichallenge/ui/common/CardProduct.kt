@@ -1,7 +1,6 @@
 package dairo.aguas.melichallenge.ui.common
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import dairo.aguas.melichallenge.R
 import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
@@ -34,7 +34,6 @@ fun CardProduct(
                 contentDescription = productViewData.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.LightGray)
                     .aspectRatio(1f)
             )
             Text(
@@ -59,7 +58,9 @@ fun CardProduct(
                 Text(
                     color = GreenFreeShipping,
                     text = stringResource(R.string.free_shipping),
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.body1.copy(
+                        fontSize = 14.sp
+                    ),
                     modifier = Modifier
                         .padding(4.dp)
                         .fillMaxWidth()

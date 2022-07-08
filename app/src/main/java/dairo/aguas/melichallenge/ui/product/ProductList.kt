@@ -1,5 +1,6 @@
 package dairo.aguas.melichallenge.ui.product
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +17,10 @@ import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 import dairo.aguas.melichallenge.ui.model.ProductViewData
 
 @Composable
-fun ProductList(products: List<ProductViewData>) {
+fun ProductList(
+    products: List<ProductViewData>,
+    openDetail: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -28,7 +32,10 @@ fun ProductList(products: List<ProductViewData>) {
                 contentPadding = PaddingValues(4.dp)
             ) {
                 items(products) {
-                    CardProduct(productViewData = it)
+                    CardProduct(
+                        productViewData = it,
+                        modifier = Modifier.clickable { openDetail(it.id) }
+                    )
                 }
             }
         }
@@ -37,7 +44,7 @@ fun ProductList(products: List<ProductViewData>) {
 
 @Preview
 @Composable
-fun ProductListPreview() {
+private fun ProductListPreview() {
     MeliChallengeScreen {
         ProductList(
             products = listOf(
@@ -77,6 +84,6 @@ fun ProductListPreview() {
                     freeShipping = true
                 )
             )
-        )
+        ) {}
     }
 }

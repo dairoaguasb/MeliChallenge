@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -40,11 +41,11 @@ fun CardProduct(
                 color = Color.Black,
                 text = productViewData.title,
                 style = MaterialTheme.typography.subtitle1,
-                maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
+                    .height(60.dp)
             )
             Text(
                 color = Color.Black,
@@ -62,7 +63,7 @@ fun CardProduct(
                         fontSize = 14.sp
                     ),
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(start = 4.dp, bottom = 8.dp)
                         .fillMaxWidth()
                 )
             }

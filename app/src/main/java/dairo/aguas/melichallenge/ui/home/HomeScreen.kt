@@ -34,9 +34,10 @@ fun HomeApp() {
                 EmptyState()
             } else {
                 ProductListScreen(
-                    searchProduct,
+                    searchText = searchProduct,
                     viewModel = hiltViewModel()
-                )
+                ) {
+                }
             }
         }
     }

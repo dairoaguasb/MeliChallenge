@@ -17,7 +17,8 @@ import dairo.aguas.melichallenge.ui.state.ProductState
 @Composable
 fun ProductListScreen(
     searchText: String,
-    viewModel: ProductListViewModel
+    viewModel: ProductListViewModel,
+    openDetail: (String) -> Unit
 ) {
     val productState by viewModel.state.collectAsState()
 
@@ -25,11 +26,17 @@ fun ProductListScreen(
         viewModel.searchProductList(searchText)
     }
 
-    ProductScreenStates(productState = productState)
+    ProductScreenStates(
+        productState = productState,
+        openDetail = openDetail
+    )
 }
 
 @Composable
-private fun ProductScreenStates(productState: ProductState) {
+private fun ProductScreenStates(
+    productState: ProductState,
+    openDetail: (String) -> Unit
+) {
     when {
         productState.loading -> {
             LoadingIndicator()
@@ -40,7 +47,10 @@ private fun ProductScreenStates(productState: ProductState) {
         else -> {
             val productList = productState.products
             if (productList.isNotEmpty()) {
-                ProductList(products = productState.products)
+                ProductList(
+                    products = productState.products,
+                    openDetail = openDetail
+                )
             } else {
                 EmptyState()
             }
@@ -92,7 +102,7 @@ private fun ProductScreenStatesSuccessPreview() {
                     )
                 )
             )
-        )
+        ){}
     }
 }
 
@@ -102,7 +112,7 @@ private fun ProductScreenStatesLoadingPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
             productState = ProductState(loading = true)
-        )
+        ){}
     }
 }
 
@@ -112,6 +122,6 @@ private fun ProductScreenStatesErrorPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
             productState = ProductState(error = R.string.error_time_out)
-        )
+        ){}
     }
 }

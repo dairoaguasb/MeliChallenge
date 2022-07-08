@@ -12,33 +12,41 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import dairo.aguas.melichallenge.ui.common.EmptyState
 import dairo.aguas.melichallenge.ui.common.SearchLayout
+import dairo.aguas.melichallenge.ui.navigation.Navigation
 import dairo.aguas.melichallenge.ui.product.ProductListScreen
 import dairo.aguas.melichallenge.ui.theme.MeliChallengeTheme
 
 @Composable
-fun HomeApp() {
+fun HomeScreen() {
+    val navController = rememberNavController()
     MeliChallengeScreen {
-        var searchProduct by remember { mutableStateOf("") }
-        var searchText by remember { mutableStateOf("") }
-        Column {
-            SearchLayout(
-                value = searchText,
-                onValueChange = { searchText = it }
-            ) {
-                searchProduct = searchText
-            }
+        Navigation(navController = navController)
+    }
+}
 
-            if (searchProduct.isEmpty()) {
-                EmptyState()
-            } else {
-                ProductListScreen(
-                    searchText = searchProduct,
-                    viewModel = hiltViewModel()
-                ) {
-                }
-            }
+@Composable
+fun HomeApp(openDetail: (String) -> Unit) {
+    var searchProduct by remember { mutableStateOf("") }
+    var searchText by remember { mutableStateOf("") }
+    Column {
+        SearchLayout(
+            value = searchText,
+            onValueChange = { searchText = it }
+        ) {
+            searchProduct = searchText
+        }
+
+        if (searchProduct.isEmpty()) {
+            EmptyState()
+        } else {
+            ProductListScreen(
+                searchText = searchProduct,
+                viewModel = hiltViewModel(),
+                openDetail = openDetail
+            )
         }
     }
 }
@@ -58,5 +66,7 @@ fun MeliChallengeScreen(content: @Composable () -> Unit) {
 @Preview
 @Composable
 fun HomeAppPreview() {
-    HomeApp()
+    MeliChallengeScreen {
+        HomeApp {}
+    }
 }

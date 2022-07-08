@@ -102,7 +102,7 @@ private fun ProductScreenStatesSuccessPreview() {
                     )
                 )
             )
-        ){}
+        ) {}
     }
 }
 
@@ -112,7 +112,7 @@ private fun ProductScreenStatesLoadingPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
             productState = ProductState(loading = true)
-        ){}
+        ) {}
     }
 }
 
@@ -122,6 +122,6 @@ private fun ProductScreenStatesErrorPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
             productState = ProductState(error = R.string.error_time_out)
-        ){}
+        ) {}
     }
 }

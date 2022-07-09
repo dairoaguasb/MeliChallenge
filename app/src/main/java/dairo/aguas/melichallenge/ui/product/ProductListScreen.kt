@@ -1,7 +1,7 @@
 package dairo.aguas.melichallenge.ui.product
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -10,26 +10,32 @@ import dairo.aguas.melichallenge.R
 import dairo.aguas.melichallenge.ui.common.EmptyState
 import dairo.aguas.melichallenge.ui.common.ErrorMessage
 import dairo.aguas.melichallenge.ui.common.LoadingIndicator
+import dairo.aguas.melichallenge.ui.common.SearchLayout
 import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.state.ProductState
 
 @Composable
 fun ProductListScreen(
-    searchText: String,
     viewModel: ProductListViewModel,
     openDetail: (String) -> Unit
 ) {
     val productState by viewModel.state.collectAsState()
+    val searchText by viewModel.searchText.collectAsState()
 
-    LaunchedEffect(key1 = searchText) {
-        viewModel.searchProductList(searchText)
+    Column {
+        SearchLayout(
+            value = searchText,
+            onValueChange = { viewModel.onSearchTextChanged(it) }
+        ) {
+            viewModel.searchProductList(searchText)
+        }
+
+        ProductScreenStates(
+            productState = productState,
+            openDetail = openDetail
+        )
     }
-
-    ProductScreenStates(
-        productState = productState,
-        openDetail = openDetail
-    )
 }
 
 @Composable

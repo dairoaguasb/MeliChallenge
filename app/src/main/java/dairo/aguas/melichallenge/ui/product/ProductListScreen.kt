@@ -1,29 +1,47 @@
 package dairo.aguas.melichallenge.ui.product
 
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import dairo.aguas.melichallenge.R
+import dairo.aguas.melichallenge.ui.common.EmptyState
 import dairo.aguas.melichallenge.ui.common.ErrorMessage
 import dairo.aguas.melichallenge.ui.common.LoadingIndicator
+import dairo.aguas.melichallenge.ui.common.SearchLayout
 import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.state.ProductState
 
 @Composable
-fun ProductScreen(lazyGridState: LazyGridState) {
-    ProductScreenStates(
-        productState = ProductState(),
-        lazyGridState = lazyGridState
-    )
+fun ProductListScreen(
+    viewModel: ProductListViewModel,
+    openDetail: (String) -> Unit
+) {
+    val productState by viewModel.state.collectAsState()
+    val searchText by viewModel.searchText.collectAsState()
+
+    Column {
+        SearchLayout(
+            value = searchText,
+            onValueChange = { viewModel.onSearchTextChanged(it) }
+        ) {
+            viewModel.searchProductList(searchText)
+        }
+
+        ProductScreenStates(
+            productState = productState,
+            openDetail = openDetail
+        )
+    }
 }
 
 @Composable
 private fun ProductScreenStates(
     productState: ProductState,
-    lazyGridState: LazyGridState
+    openDetail: (String) -> Unit
 ) {
     when {
         productState.loading -> {
@@ -33,10 +51,15 @@ private fun ProductScreenStates(
             ErrorMessage(message = stringResource(id = productState.error))
         }
         else -> {
-            ProductList(
-                products = productState.products,
-                lazyGridState = lazyGridState
-            )
+            val productList = productState.products
+            if (productList.isNotEmpty()) {
+                ProductList(
+                    products = productState.products,
+                    openDetail = openDetail
+                )
+            } else {
+                EmptyState()
+            }
         }
     }
 }
@@ -84,9 +107,8 @@ private fun ProductScreenStatesSuccessPreview() {
                         freeShipping = true
                     )
                 )
-            ),
-            lazyGridState = rememberLazyGridState()
-        )
+            )
+        ) {}
     }
 }
 
@@ -95,9 +117,8 @@ private fun ProductScreenStatesSuccessPreview() {
 private fun ProductScreenStatesLoadingPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
-            productState = ProductState(loading = true),
-            lazyGridState = rememberLazyGridState()
-        )
+            productState = ProductState(loading = true)
+        ) {}
     }
 }
 
@@ -106,8 +127,7 @@ private fun ProductScreenStatesLoadingPreview() {
 private fun ProductScreenStatesErrorPreview() {
     MeliChallengeScreen {
         ProductScreenStates(
-            productState = ProductState(error = R.string.error_time_out),
-            lazyGridState = rememberLazyGridState()
-        )
+            productState = ProductState(error = R.string.error_time_out)
+        ) {}
     }
 }

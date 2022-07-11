@@ -25,7 +25,7 @@ import dairo.aguas.melichallenge.R
 import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 
 @Composable
-fun SearchLayout(value: String, onValueChange: (String) -> Unit) {
+fun SearchLayout(value: String, onValueChange: (String) -> Unit, actionDone: () -> Unit) {
     val focusManager = LocalFocusManager.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -45,7 +45,7 @@ fun SearchLayout(value: String, onValueChange: (String) -> Unit) {
             },
             trailingIcon = {
                 IconButton(onClick = {
-                    onValueChange("")
+                    onValueChange(String())
                     focusManager.moveFocus(FocusDirection.Down)
                 }) {
                     Icon(
@@ -57,6 +57,7 @@ fun SearchLayout(value: String, onValueChange: (String) -> Unit) {
             keyboardActions = KeyboardActions(
                 onDone = {
                     focusManager.clearFocus()
+                    actionDone()
                 }
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -72,6 +73,6 @@ fun SearchLayout(value: String, onValueChange: (String) -> Unit) {
 @Composable
 private fun SearchLayoutPreview() {
     MeliChallengeScreen {
-        SearchLayout(value = "") {}
+        SearchLayout(value = "", {}) {}
     }
 }

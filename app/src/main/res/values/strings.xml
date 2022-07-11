@@ -3,6 +3,8 @@
     <string name="search_title">Buscar en Mercado Libre</string>
     <string name="clear_title">Borrar</string>
     <string name="free_shipping">Envío gratis</string>
+    <string name="not_find_products">No encontramos publicaciones</string>
+    <string name="word_spelled_correctly">Revisa que la palabra esté bien escrita</string>
 
     <!--    errors-->
     <string name="error_time_out">El tiempo de la petición ha expirado</string>

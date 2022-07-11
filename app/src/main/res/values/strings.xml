@@ -5,6 +5,12 @@
     <string name="free_shipping">Envío gratis</string>
     <string name="not_find_products">No encontramos publicaciones</string>
     <string name="word_spelled_correctly">Revisa que la palabra esté bien escrita</string>
+    <string name="product_new">Nuevo | </string>
+    <string name="product_used">Usado | </string>
+    <string name="product_sold_quantity">%1$d Vendidos</string>
+    <string name="product_discount">%1$s OFF</string>
+    <string name="product_description">Descripción</string>
+    <string name="product_seller_posts">Publicaciones del vendedor</string>
 
     <!--    errors-->
     <string name="error_time_out">El tiempo de la petición ha expirado</string>

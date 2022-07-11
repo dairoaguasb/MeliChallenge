@@ -27,6 +27,8 @@ class ProductListViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(ProductState())
     val state: StateFlow<ProductState> = _state.asStateFlow()
+    private val _searchText: MutableStateFlow<String> = MutableStateFlow(String())
+    val searchText: StateFlow<String> = _searchText.asStateFlow()
 
     fun searchProductList(searchPattern: String) {
         searchProductListUseCase.invoke(searchPattern).map { result ->
@@ -45,5 +47,9 @@ class ProductListViewModel @Inject constructor(
         }.onStart {
             _state.value = ProductState(loading = true)
         }.flowOn(coroutineDispatcher).launchIn(viewModelScope)
+    }
+
+    fun onSearchTextChanged(changedSearchText: String) {
+        _searchText.value = changedSearchText
     }
 }

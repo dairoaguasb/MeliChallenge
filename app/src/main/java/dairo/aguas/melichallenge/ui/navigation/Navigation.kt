@@ -1,6 +1,5 @@
 package dairo.aguas.melichallenge.ui.navigation
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
@@ -10,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import dairo.aguas.melichallenge.ui.detail.DetailScreen
 import dairo.aguas.melichallenge.ui.product.ProductListScreen
 
 @Composable
@@ -37,8 +37,8 @@ fun NavGraphBuilder.productNav(navController: NavController) {
             }
         }
         composable(NavCommand.ContentTypeDetail(Feature.PRODUCT)) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString(NavArg.ItemId.key)
-            Text(text = "Dairo $id")
+            val id = requireNotNull(backStackEntry.arguments?.getString(NavArg.ItemId.key))
+            DetailScreen(productId = id)
         }
     }
 }

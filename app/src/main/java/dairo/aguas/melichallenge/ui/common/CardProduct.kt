@@ -2,6 +2,7 @@ package dairo.aguas.melichallenge.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -63,9 +64,11 @@ fun CardProduct(
                         fontSize = 14.sp
                     ),
                     modifier = Modifier
-                        .padding(start = 4.dp, bottom = 8.dp)
+                        .padding(start = 4.dp, bottom = 4.dp)
                         .fillMaxWidth()
                 )
+            } else {
+                Spacer(modifier = Modifier.height(23.dp))
             }
         }
     }

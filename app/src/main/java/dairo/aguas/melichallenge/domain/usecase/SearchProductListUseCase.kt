@@ -5,8 +5,8 @@ import dairo.aguas.melichallenge.domain.model.Result
 import dairo.aguas.melichallenge.domain.repository.ProductListRepository
 import kotlinx.coroutines.flow.Flow
 
-class SearchProductListUseCase(private val homeRepository: ProductListRepository) {
+class SearchProductListUseCase(private val productListRepository: ProductListRepository) {
 
     operator fun invoke(searchPattern: String): Flow<Result<List<Product>>> =
-        homeRepository.searchProductList(searchPattern)
+        productListRepository.searchProductList(searchPattern)
 }

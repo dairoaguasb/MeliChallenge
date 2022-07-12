@@ -4,6 +4,6 @@ import dairo.aguas.melichallenge.ui.model.DetailViewData
 
 data class DetailState(
     val loading: Boolean = false,
-    val products: DetailViewData? = null,
+    val product: DetailViewData? = null,
     val error: Int = 0
 )

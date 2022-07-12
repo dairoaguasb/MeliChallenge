@@ -38,7 +38,10 @@ fun NavGraphBuilder.productNav(navController: NavController) {
         }
         composable(NavCommand.ContentTypeDetail(Feature.PRODUCT)) { backStackEntry ->
             val id = requireNotNull(backStackEntry.arguments?.getString(NavArg.ItemId.key))
-            DetailScreen(productId = id)
+            DetailScreen(
+                viewModel = hiltViewModel(),
+                productId = id
+            )
         }
     }
 }

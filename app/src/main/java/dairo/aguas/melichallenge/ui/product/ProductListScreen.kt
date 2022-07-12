@@ -54,7 +54,7 @@ private fun ProductScreenStates(
             val productList = productState.products
             if (productList.isNotEmpty()) {
                 ProductList(
-                    products = productState.products,
+                    products = productList,
                     openDetail = openDetail
                 )
             } else {

@@ -2,16 +2,18 @@ package dairo.aguas.melichallenge.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,12 +26,19 @@ import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.theme.GreenFreeShipping
 
 @Composable
-fun CardProduct(
+fun CardProductHorizontal(
     productViewData: ProductViewData,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier.padding(4.dp)) {
-        Column {
+    Card(
+        modifier = modifier
+            .size(width = 200.dp, height = 300.dp)
+            .padding(4.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(16.dp)
+        ) {
             Image(
                 painter = rememberAsyncImagePainter(productViewData.thumbnail),
                 contentDescription = productViewData.title,
@@ -37,18 +46,10 @@ fun CardProduct(
                     .fillMaxWidth()
                     .aspectRatio(1f)
             )
-            Text(
-                text = productViewData.title,
-                style = MaterialTheme.typography.subtitle1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth()
-                    .height(60.dp)
-            )
+            Divider(color = Color.LightGray, thickness = 1.dp)
             Text(
                 text = productViewData.price,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
@@ -64,18 +65,24 @@ fun CardProduct(
                         .padding(start = 4.dp, bottom = 4.dp)
                         .fillMaxWidth()
                 )
-            } else {
-                Spacer(modifier = Modifier.height(23.dp))
             }
+            Text(
+                text = productViewData.title,
+                style = MaterialTheme.typography.caption,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+            )
         }
     }
 }
 
 @Preview
 @Composable
-fun CardProductPreview() {
+fun CardProductHorizontalPreview() {
     MeliChallengeScreen {
-        CardProduct(
+        CardProductHorizontal(
             productViewData = ProductViewData(
                 id = "1",
                 title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",

@@ -12,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +38,6 @@ fun CardProduct(
                     .aspectRatio(1f)
             )
             Text(
-                color = Color.Black,
                 text = productViewData.title,
                 style = MaterialTheme.typography.subtitle1,
                 overflow = TextOverflow.Ellipsis,
@@ -49,7 +47,6 @@ fun CardProduct(
                     .height(60.dp)
             )
             Text(
-                color = Color.Black,
                 text = productViewData.price,
                 style = MaterialTheme.typography.h5,
                 modifier = Modifier

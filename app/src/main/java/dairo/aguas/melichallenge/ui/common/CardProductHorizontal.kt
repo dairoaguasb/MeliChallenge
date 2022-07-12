@@ -48,7 +48,6 @@ fun CardProductHorizontal(
             )
             Divider(color = Color.LightGray, thickness = 1.dp)
             Text(
-                color = Color.Black,
                 text = productViewData.price,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
@@ -68,7 +67,6 @@ fun CardProductHorizontal(
                 )
             }
             Text(
-                color = Color.Black,
                 text = productViewData.title,
                 style = MaterialTheme.typography.caption,
                 overflow = TextOverflow.Ellipsis,

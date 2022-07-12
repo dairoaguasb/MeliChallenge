@@ -14,7 +14,7 @@ data class ProductDetailResponseDTO(
     @SerializedName("warranty") val warranty: String?,
     @SerializedName("pictures") val pictures: List<PicturesDTO>
 ) {
-    fun toDomainProductDetail(): ProductDetail {
+    fun toDomainProductDetail(description: String): ProductDetail {
         return ProductDetail(
             id = id,
             title = title,
@@ -24,6 +24,7 @@ data class ProductDetailResponseDTO(
             condition = condition,
             soldQuantity = soldQuantity,
             warranty = warranty,
+            description = description,
             pictures = pictures.map { it.toDomainPictures() }
         )
     }

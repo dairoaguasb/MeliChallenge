@@ -65,7 +65,7 @@ fun CardProduct(
                         .fillMaxWidth()
                 )
             } else {
-                Spacer(modifier = Modifier.height(23.dp))
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }

@@ -10,5 +10,6 @@ data class ProductDetail(
     val soldQuantity: Int,
     val warranty: String?,
     val description: String,
-    val pictures: List<Pictures>
+    val pictures: List<Pictures>,
+    val productListSeller: List<Product>
 )

@@ -1,6 +1,7 @@
 package dairo.aguas.melichallenge.data.repository
 
 import dairo.aguas.melichallenge.data.endpoint.ProductAPI
+import dairo.aguas.melichallenge.domain.model.Product
 import dairo.aguas.melichallenge.domain.model.ProductDetail
 import dairo.aguas.melichallenge.domain.model.Result
 import dairo.aguas.melichallenge.domain.repository.DomainExceptionRepository
@@ -17,6 +18,13 @@ class ProductDetailRepositoryImpl(
         val apiResult = productAPI.getProductDetail(id)
         val apiResultDescription = productAPI.getProductDescription(id)
         emit(Result.Success(apiResult.toDomainProductDetail(apiResultDescription.description)))
+    }.catch {
+        emit(Result.Failure(domainExceptionRepository.manageError(it)))
+    }
+
+    override fun getProductListSeller(sellerId: Int) = flow<Result<List<Product>>> {
+        val apiResult = productAPI.getProductListSeller(sellerId)
+        emit(Result.Success(apiResult.productList.map { it.toDomainProduct() }))
     }.catch {
         emit(Result.Failure(domainExceptionRepository.manageError(it)))
     }

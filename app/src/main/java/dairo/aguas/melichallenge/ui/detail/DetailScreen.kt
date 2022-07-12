@@ -201,21 +201,23 @@ fun ProductDescription(detailViewData: DetailViewData) {
 
 @Composable
 fun ProductsSeller(detailViewData: DetailViewData) {
-    Divider(color = Color.LightGray, thickness = 1.dp)
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .size(400.dp)
-            .padding(16.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.product_seller_posts),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(16.dp)
-        )
-        LazyRow {
-            items(detailViewData.productSeller) {
-                CardProductHorizontal(productViewData = it)
+    if (detailViewData.productSeller.isNotEmpty()) {
+        Divider(color = Color.LightGray, thickness = 1.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(400.dp)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.product_seller_posts),
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(16.dp)
+            )
+            LazyRow {
+                items(detailViewData.productSeller) {
+                    CardProductHorizontal(productViewData = it)
+                }
             }
         }
     }

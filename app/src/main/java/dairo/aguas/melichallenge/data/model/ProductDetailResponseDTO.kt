@@ -25,7 +25,8 @@ data class ProductDetailResponseDTO(
             soldQuantity = soldQuantity,
             warranty = warranty,
             description = description,
-            pictures = pictures.map { it.toDomainPictures() }
+            pictures = pictures.map { it.toDomainPictures() },
+            productListSeller = emptyList()
         )
     }
 }

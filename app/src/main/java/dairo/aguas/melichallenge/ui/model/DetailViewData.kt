@@ -25,7 +25,7 @@ data class DetailViewData(
         warranty = productDetail.warranty ?: String(),
         description = productDetail.description,
         pictures = productDetail.pictures.map { PictureViewData(it) },
-        productSeller = emptyList()
+        productSeller = productDetail.productListSeller.map { ProductViewData(it) }
     )
 }
 

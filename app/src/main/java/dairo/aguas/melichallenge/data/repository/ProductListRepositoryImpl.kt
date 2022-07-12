@@ -12,6 +12,7 @@ class ProductListRepositoryImpl(
     private val productAPI: ProductAPI,
     private val domainExceptionRepository: DomainExceptionRepository
 ) : ProductListRepository {
+
     override fun searchProductList(searchPattern: String) = flow<Result<List<Product>>> {
         val apiResult = productAPI.searchProductList(searchPattern)
         emit(Result.Success(apiResult.productList.map { it.toDomainProduct() }))

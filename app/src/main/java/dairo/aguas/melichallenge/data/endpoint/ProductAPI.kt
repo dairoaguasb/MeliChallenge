@@ -17,6 +17,9 @@ interface ProductAPI {
 
     @GET(PRODUCT_DESCRIPTION)
     suspend fun getProductDescription(@Path("id") id: String): ProductDescriptionResponseDTO
+
+    @GET(SEARCH_PRODUCTS)
+    suspend fun getProductListSeller(@Query("seller_id") sellerId: Int): ProductResponseDTO
 }
 
 private const val SEARCH_PRODUCTS = "sites/MLA/search?"

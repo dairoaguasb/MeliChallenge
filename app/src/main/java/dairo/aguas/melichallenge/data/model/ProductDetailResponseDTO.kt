@@ -8,10 +8,10 @@ data class ProductDetailResponseDTO(
     @SerializedName("title") val title: String,
     @SerializedName("seller_id") val sellerId: Int,
     @SerializedName("price") val price: Double,
-    @SerializedName("original_price") val originalPrice: Double,
+    @SerializedName("original_price") val originalPrice: Double?,
     @SerializedName("condition") val condition: String,
     @SerializedName("sold_quantity") val soldQuantity: Int,
-    @SerializedName("warranty") val warranty: String,
+    @SerializedName("warranty") val warranty: String?,
     @SerializedName("pictures") val pictures: List<PicturesDTO>
 ) {
     fun toDomainProductDetail(): ProductDetail {

@@ -19,6 +19,9 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,8 +46,17 @@ import dairo.aguas.melichallenge.ui.state.DetailState
 import dairo.aguas.melichallenge.ui.theme.GreenFreeShipping
 
 @Composable
-fun DetailScreen(productId: String) {
-    Text(text = productId)
+fun DetailScreen(
+    viewModel: DetailViewModel,
+    productId: String
+) {
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(key1 = productId) {
+        viewModel.getProductDetail(productId)
+    }
+
+    DetailScreenState(detailState = state)
 }
 
 @Composable
@@ -56,8 +68,8 @@ fun DetailScreenState(detailState: DetailState) {
         detailState.error != 0 -> {
             ErrorMessage(message = stringResource(id = detailState.error))
         }
-        detailState.products != null -> {
-            ProductDetail(detailViewData = detailState.products)
+        detailState.product != null -> {
+            ProductDetail(detailViewData = detailState.product)
         }
     }
 }
@@ -143,13 +155,15 @@ fun PicturesPreview(pictures: List<PictureViewData>) {
 
 @Composable
 fun ProductPrice(detailViewData: DetailViewData) {
-    Text(
-        color = Color.DarkGray,
-        text = detailViewData.originalPrice,
-        textDecoration = TextDecoration.LineThrough,
-        style = MaterialTheme.typography.subtitle1,
-        modifier = Modifier.padding(horizontal = 16.dp)
-    )
+    if (detailViewData.originalPrice.isNotEmpty()) {
+        Text(
+            color = Color.DarkGray,
+            text = detailViewData.originalPrice,
+            textDecoration = TextDecoration.LineThrough,
+            style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+    }
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -158,12 +172,14 @@ fun ProductPrice(detailViewData: DetailViewData) {
             style = MaterialTheme.typography.h5,
             modifier = Modifier.padding(start = 16.dp)
         )
-        Text(
-            text = stringResource(id = R.string.product_discount, detailViewData.discount),
-            color = GreenFreeShipping,
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
+        if (detailViewData.discount.isNotEmpty()) {
+            Text(
+                text = stringResource(id = R.string.product_discount, detailViewData.discount),
+                color = GreenFreeShipping,
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
     }
 }
 

@@ -7,12 +7,32 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import dairo.aguas.melichallenge.data.endpoint.ProductAPI
 import dairo.aguas.melichallenge.data.repository.ProductDetailRepositoryImpl
+import dairo.aguas.melichallenge.domain.exception.ExceptionHandler
 import dairo.aguas.melichallenge.domain.repository.DomainExceptionRepository
 import dairo.aguas.melichallenge.domain.repository.ProductDetailRepository
+import dairo.aguas.melichallenge.domain.usecase.GetProductDetailUseCase
+import dairo.aguas.melichallenge.ui.detail.DetailViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ProductDetailModule {
+
+    @Provides
+    fun detailViewModelProvider(
+        getProductDetailUseCase: GetProductDetailUseCase,
+        coroutineDispatcher: CoroutineDispatcher
+    ) = DetailViewModel(
+        getProductDetailUseCase,
+        ExceptionHandler(),
+        coroutineDispatcher
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun getProductDetailUseCaseProvider(
+        productDetailRepository: ProductDetailRepository
+    ) = GetProductDetailUseCase(productDetailRepository)
 
     @Provides
     @ViewModelScoped

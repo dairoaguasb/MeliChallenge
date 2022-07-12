@@ -5,9 +5,9 @@ data class ProductDetail(
     val title: String,
     val sellerId: Int,
     val price: Double,
-    val originalPrice: Double,
+    val originalPrice: Double?,
     val condition: String,
     val soldQuantity: Int,
-    val warranty: String,
+    val warranty: String?,
     val pictures: List<Pictures>
 )

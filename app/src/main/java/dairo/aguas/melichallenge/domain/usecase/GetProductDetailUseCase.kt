@@ -18,7 +18,9 @@ class GetProductDetailUseCase(private val productDetailRepository: ProductDetail
                                 onSuccess = { productList ->
                                     emit(
                                         Result.Success(
-                                            productDetail.copy(productListSeller = productList)
+                                            productDetail.apply {
+                                                this.productListSeller = productList
+                                            }
                                         )
                                     )
                                 },

@@ -10,9 +10,9 @@ import org.junit.Test
 import retrofit2.HttpException
 
 class ExceptionRepositoryImplTest {
-    private val httpException = mockk<HttpException>(relaxed = true)
 
     private val exceptionLogin = ExceptionRepositoryImpl()
+    private val httpException = mockk<HttpException>(relaxed = true)
 
     @Test
     fun whenHttpExceptionIs400ShouldReturnBadRequestException() {

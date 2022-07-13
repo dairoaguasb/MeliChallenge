@@ -14,13 +14,10 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.resetMain
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -109,10 +106,5 @@ class ProductListViewModelTest {
         assertEquals(result[1], "Smart")
 
         job.cancel()
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 }

@@ -32,6 +32,6 @@ val PRODUCT_MOCK = Product(
     id = "id",
     title = "title",
     price = 10.0,
-    thumbnail = "thumbnail",
+    thumbnail = "http://thumbnail",
     freeShipping = true
 )

@@ -16,8 +16,14 @@ class ProductDetailRepositoryImpl(
 
     override fun getProductDetail(id: String) = flow<Result<ProductDetail>> {
         val apiResult = productAPI.getProductDetail(id)
+        emit(Result.Success(apiResult.toDomainProductDetail()))
+    }.catch {
+        emit(Result.Failure(domainExceptionRepository.manageError(it)))
+    }
+
+    override fun getProductDescription(id: String) = flow<Result<String>> {
         val apiResultDescription = productAPI.getProductDescription(id)
-        emit(Result.Success(apiResult.toDomainProductDetail(apiResultDescription.description)))
+        emit(Result.Success(apiResultDescription.description))
     }.catch {
         emit(Result.Failure(domainExceptionRepository.manageError(it)))
     }

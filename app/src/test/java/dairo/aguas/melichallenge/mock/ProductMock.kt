@@ -2,6 +2,7 @@ package dairo.aguas.melichallenge.mock
 
 import dairo.aguas.melichallenge.data.model.ProductDTO
 import dairo.aguas.melichallenge.data.model.ShippingDTO
+import dairo.aguas.melichallenge.domain.model.Product
 import dairo.aguas.melichallenge.domain.model.ProductDetail
 
 val SHIPPING_MOCK = ShippingDTO(freeShipping = true)
@@ -25,4 +26,12 @@ val PRODUCT_DETAIL_MOCK = ProductDetail(
     warranty = "warranty",
     description = "description",
     pictures = emptyList()
+)
+
+val PRODUCT_MOCK = Product(
+    id = "id",
+    title = "title",
+    price = 10.0,
+    thumbnail = "thumbnail",
+    freeShipping = true
 )

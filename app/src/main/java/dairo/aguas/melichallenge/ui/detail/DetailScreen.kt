@@ -41,7 +41,6 @@ import dairo.aguas.melichallenge.ui.common.SliderView
 import dairo.aguas.melichallenge.ui.home.MeliChallengeScreen
 import dairo.aguas.melichallenge.ui.model.DetailViewData
 import dairo.aguas.melichallenge.ui.model.PictureViewData
-import dairo.aguas.melichallenge.ui.model.ProductViewData
 import dairo.aguas.melichallenge.ui.state.DetailState
 import dairo.aguas.melichallenge.ui.theme.GreenFreeShipping
 
@@ -55,8 +54,14 @@ fun DetailScreen(
     LaunchedEffect(key1 = productId) {
         viewModel.getProductDetail(productId)
     }
-
-    DetailScreenState(detailState = state)
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
+    ) {
+        DetailScreenState(state)
+        ProductsSeller(viewModel)
+    }
 }
 
 @Composable
@@ -66,39 +71,34 @@ fun DetailScreenState(detailState: DetailState) {
             LoadingIndicator()
         }
         detailState.error != 0 -> {
-            ErrorMessage(message = stringResource(id = detailState.error))
+            ErrorMessage(stringResource(id = detailState.error))
         }
         detailState.product != null -> {
-            ProductDetail(detailViewData = detailState.product)
+            ProductDetail(detailState.product)
         }
     }
 }
 
 @Composable
 private fun ProductDetail(detailViewData: DetailViewData) {
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
-    ) {
-        ProductQuantity(detailViewData = detailViewData)
+    Column {
+        ProductQuantity(detailViewData)
         Text(
             text = detailViewData.title,
             style = MaterialTheme.typography.subtitle1,
             maxLines = 2,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        PicturesPreview(pictures = detailViewData.pictures)
-        ProductPrice(detailViewData = detailViewData)
+        PicturesPreview(detailViewData.pictures)
+        ProductPrice(detailViewData)
         Text(
             text = detailViewData.warranty,
             style = MaterialTheme.typography.overline,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        ProductDescription(detailViewData = detailViewData)
-        Spacer(modifier = Modifier.height(16.dp))
-        ProductsSeller(detailViewData = detailViewData)
+        Spacer(Modifier.height(16.dp))
+        ProductDescription(detailViewData)
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -200,8 +200,9 @@ fun ProductDescription(detailViewData: DetailViewData) {
 }
 
 @Composable
-fun ProductsSeller(detailViewData: DetailViewData) {
-    if (detailViewData.productSeller.isNotEmpty()) {
+fun ProductsSeller(viewModel: DetailViewModel) {
+    val productList by viewModel.productList.collectAsState()
+    if (productList.isNotEmpty()) {
         Divider(color = Color.LightGray, thickness = 1.dp)
         Column(
             modifier = Modifier
@@ -215,7 +216,7 @@ fun ProductsSeller(detailViewData: DetailViewData) {
                 modifier = Modifier.padding(16.dp)
             )
             LazyRow {
-                items(detailViewData.productSeller) {
+                items(productList) {
                     CardProductHorizontal(productViewData = it)
                 }
             }
@@ -243,43 +244,6 @@ private fun ProductDetailPreview() {
                     PictureViewData("https://http2.mlstatic.com/D_861897-MLA46114990467_052021-O.jpg"),
                     PictureViewData("https://http2.mlstatic.com/D_922812-MLA46114829821_052021-O.jpg")
 
-                ),
-                productSeller = listOf(
-                    ProductViewData(
-                        id = "1",
-                        title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",
-                        price = "$ 111.200",
-                        thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
-                        freeShipping = false
-                    ),
-                    ProductViewData(
-                        id = "1",
-                        title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",
-                        price = "$ 111.200",
-                        thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
-                        freeShipping = true
-                    ),
-                    ProductViewData(
-                        id = "1",
-                        title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",
-                        price = "$ 111.200",
-                        thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
-                        freeShipping = true
-                    ),
-                    ProductViewData(
-                        id = "1",
-                        title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",
-                        price = "$ 111.200",
-                        thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
-                        freeShipping = true
-                    ),
-                    ProductViewData(
-                        id = "1",
-                        title = "Smart TV Samsung Series 7 UN50AU7000GCZB LED 4K 50\" 220V - 240V",
-                        price = "$ 111.200",
-                        thumbnail = "https://http2.mlstatic.com/D_NQ_NP_787221-MLA48007684849_102021-V.webp",
-                        freeShipping = true
-                    )
                 )
             )
         )

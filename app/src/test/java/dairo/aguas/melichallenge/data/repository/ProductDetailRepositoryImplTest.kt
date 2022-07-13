@@ -40,20 +40,17 @@ class ProductDetailRepositoryImplTest {
     @Test
     fun whenGetProductDetailIsCalledShouldReturnProductDetail() = runBlocking {
         val productDetailResponseDTO: ProductDetailResponseDTO = mockk()
-        val productDescriptionResponseDTO = ProductDescriptionResponseDTO(description = "desc")
         val productDetailDomain: ProductDetail = mockk()
 
         coEvery { productAPI.getProductDetail(any()) } returns productDetailResponseDTO
-        coEvery { productAPI.getProductDescription(any()) } returns productDescriptionResponseDTO
-        every { productDetailResponseDTO.toDomainProductDetail(any()) } returns productDetailDomain
+        every { productDetailResponseDTO.toDomainProductDetail() } returns productDetailDomain
 
         productDetailRepository.getProductDetail("MLI111").collect { result ->
             assert(result.isSuccess())
             assertEquals(result.getSuccess(), productDetailDomain)
         }
         coVerify(exactly = 1) { productAPI.getProductDetail(any()) }
-        coVerify(exactly = 1) { productAPI.getProductDescription(any()) }
-        coVerify(exactly = 1) { productDetailResponseDTO.toDomainProductDetail(any()) }
+        coVerify(exactly = 1) { productDetailResponseDTO.toDomainProductDetail() }
         confirmVerified(productDetailResponseDTO)
     }
 
@@ -66,6 +63,32 @@ class ProductDetailRepositoryImplTest {
             assertEquals(result.getFailure(), NoConnectivityDomainException)
         }
         coVerify(exactly = 1) { productAPI.getProductDetail(any()) }
+    }
+
+    @Test
+    fun whenGetProductDescriptionIsCalledShouldReturnString() = runBlocking {
+        coEvery {
+            productAPI.getProductDescription(any())
+        } returns ProductDescriptionResponseDTO("Description")
+
+        productDetailRepository.getProductDescription("MLI111").collect { result ->
+            assert(result.isSuccess())
+            assertEquals(result.getSuccess(), "Description")
+        }
+        coVerify(exactly = 1) { productAPI.getProductDescription(any()) }
+    }
+
+    @Test
+    fun whenGetProductDescriptionIsCalledShouldReturnFailure() = runBlocking {
+        coEvery {
+            productAPI.getProductDescription(any())
+        } answers { throw UnknownHostException() }
+
+        productDetailRepository.getProductDescription("MLI111").collect { result ->
+            assert(result.isFailure())
+            assertEquals(result.getFailure(), NoConnectivityDomainException)
+        }
+        coVerify(exactly = 1) { productAPI.getProductDescription(any()) }
     }
 
     @Test

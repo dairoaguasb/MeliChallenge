@@ -3,7 +3,9 @@ package dairo.aguas.melichallenge.domain.usecase
 import dairo.aguas.melichallenge.domain.model.ProductDetail
 import dairo.aguas.melichallenge.domain.model.Result
 import dairo.aguas.melichallenge.domain.model.fold
+import dairo.aguas.melichallenge.domain.model.getSuccess
 import dairo.aguas.melichallenge.domain.repository.ProductDetailRepository
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class GetProductDetailUseCase(private val productDetailRepository: ProductDetailRepository) {
@@ -12,23 +14,9 @@ class GetProductDetailUseCase(private val productDetailRepository: ProductDetail
         productDetailRepository.getProductDetail(id).collect { resultProductDetail ->
             resultProductDetail.fold(
                 onSuccess = { productDetail ->
-                    productDetailRepository.getProductListSeller(productDetail.sellerId)
-                        .collect { resultProductList ->
-                            resultProductList.fold(
-                                onSuccess = { productList ->
-                                    emit(
-                                        Result.Success(
-                                            productDetail.apply {
-                                                this.productListSeller = productList
-                                            }
-                                        )
-                                    )
-                                },
-                                onFailure = {
-                                    emit(Result.Failure(it))
-                                }
-                            )
-                        }
+                    productDetail.description =
+                        productDetailRepository.getProductDescription(id).first().getSuccess()
+                    emit(Result.Success(productDetail))
                 },
                 onFailure = {
                     emit(Result.Failure(it))

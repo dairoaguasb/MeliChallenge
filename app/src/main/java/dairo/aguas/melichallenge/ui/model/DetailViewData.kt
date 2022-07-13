@@ -12,8 +12,7 @@ data class DetailViewData(
     val soldQuantity: Int,
     val warranty: String,
     val description: String,
-    val pictures: List<PictureViewData>,
-    val productSeller: List<ProductViewData>
+    val pictures: List<PictureViewData>
 ) {
     constructor(productDetail: ProductDetail) : this(
         title = productDetail.title,
@@ -23,9 +22,8 @@ data class DetailViewData(
         isNew = productDetail.condition == CONDITION_NEW,
         soldQuantity = productDetail.soldQuantity,
         warranty = productDetail.warranty ?: String(),
-        description = productDetail.description,
-        pictures = productDetail.pictures.map { PictureViewData(it) },
-        productSeller = productDetail.productListSeller.map { ProductViewData(it) }
+        description = productDetail.description ?: String(),
+        pictures = productDetail.pictures.map { PictureViewData(it) }
     )
 }
 

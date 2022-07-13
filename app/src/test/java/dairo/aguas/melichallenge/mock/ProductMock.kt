@@ -24,6 +24,5 @@ val PRODUCT_DETAIL_MOCK = ProductDetail(
     soldQuantity = 10,
     warranty = "warranty",
     description = "description",
-    pictures = emptyList(),
-    productListSeller = emptyList()
+    pictures = emptyList()
 )

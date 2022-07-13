@@ -2,7 +2,6 @@ package dairo.aguas.melichallenge.domain.usecase
 
 import dairo.aguas.melichallenge.domain.exception.BadRequestException
 import dairo.aguas.melichallenge.domain.exception.NoConnectivityDomainException
-import dairo.aguas.melichallenge.domain.model.Product
 import dairo.aguas.melichallenge.domain.model.Result
 import dairo.aguas.melichallenge.domain.model.getFailure
 import dairo.aguas.melichallenge.domain.model.getSuccess
@@ -34,26 +33,23 @@ class GetProductDetailUseCaseTest {
     @Test
     fun whenUseCaseIsCalledShouldReturnProductDetail() = runBlocking {
         val productDetail = PRODUCT_DETAIL_MOCK
-        val product: Product = mockk()
 
         coEvery {
             productDetailRepository.getProductDetail(any())
         } returns flowOf(Result.Success(productDetail))
 
         coEvery {
-            productDetailRepository.getProductListSeller(any())
-        } returns flowOf(Result.Success(listOf(product)))
+            productDetailRepository.getProductDescription(any())
+        } returns flowOf(Result.Success("description new"))
 
         getProductDetailUseCase.invoke("MELI").collect { result ->
             assert(result.isSuccess())
-            assertEquals(
-                result.getSuccess(),
-                productDetail.apply { this.productListSeller = listOf(product) }
-            )
+            assertEquals(result.getSuccess(), productDetail)
+            assertEquals(result.getSuccess()?.description, "description new")
         }
 
         coVerify(exactly = 1) { productDetailRepository.getProductDetail(any()) }
-        coVerify(exactly = 1) { productDetailRepository.getProductListSeller(any()) }
+        coVerify(exactly = 1) { productDetailRepository.getProductDescription(any()) }
     }
 
     @Test
@@ -70,7 +66,7 @@ class GetProductDetailUseCaseTest {
     }
 
     @Test
-    fun whenUseCaseIsCalledShouldReturnBadRequestException() = runBlocking {
+    fun whenUseCaseIsCalledShouldReturnProductDetailAndDescriptionIsNull() = runBlocking {
         val productDetail = PRODUCT_DETAIL_MOCK
 
         coEvery {
@@ -78,16 +74,17 @@ class GetProductDetailUseCaseTest {
         } returns flowOf(Result.Success(productDetail))
 
         coEvery {
-            productDetailRepository.getProductListSeller(any())
+            productDetailRepository.getProductDescription(any())
         } returns flowOf(Result.Failure(BadRequestException))
 
         getProductDetailUseCase.invoke("MELI").collect { result ->
-            assert(result.isFailure())
-            assertEquals(result.getFailure(), BadRequestException)
+            assert(result.isSuccess())
+            assertEquals(result.getSuccess(), productDetail)
+            assertEquals(result.getSuccess()?.description, null)
         }
 
         coVerify(exactly = 1) { productDetailRepository.getProductDetail(any()) }
-        coVerify(exactly = 1) { productDetailRepository.getProductListSeller(any()) }
+        coVerify(exactly = 1) { productDetailRepository.getProductDescription(any()) }
     }
 
     @After

@@ -15,13 +15,6 @@ inline fun <R, T> Result<T>.fold(
     is Result.Failure -> onFailure(domainException)
 }
 
-inline fun <R, T> Result<T>.fold(
-    onSuccess: (value: T) -> R
-): R? = when (this) {
-    is Result.Success -> onSuccess(data)
-    is Result.Failure -> null
-}
-
 fun <T> Result<T>.isSuccess(): Boolean = when (this) {
     is Result.Success -> true
     is Result.Failure -> false

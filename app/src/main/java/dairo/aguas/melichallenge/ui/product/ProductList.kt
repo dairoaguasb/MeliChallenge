@@ -26,17 +26,15 @@ fun ProductList(
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        if (products.isNotEmpty()) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(150.dp),
-                contentPadding = PaddingValues(4.dp)
-            ) {
-                items(products) {
-                    CardProduct(
-                        productViewData = it,
-                        modifier = Modifier.clickable { openDetail(it.id) }
-                    )
-                }
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(150.dp),
+            contentPadding = PaddingValues(4.dp)
+        ) {
+            items(products) {
+                CardProduct(
+                    productViewData = it,
+                    modifier = Modifier.clickable { openDetail(it.id) }
+                )
             }
         }
     }

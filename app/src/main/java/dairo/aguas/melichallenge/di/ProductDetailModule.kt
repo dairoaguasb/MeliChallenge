@@ -11,6 +11,7 @@ import dairo.aguas.melichallenge.domain.exception.ExceptionHandler
 import dairo.aguas.melichallenge.domain.repository.DomainExceptionRepository
 import dairo.aguas.melichallenge.domain.repository.ProductDetailRepository
 import dairo.aguas.melichallenge.domain.usecase.GetProductDetailUseCase
+import dairo.aguas.melichallenge.domain.usecase.GetProductListSellerUseCase
 import dairo.aguas.melichallenge.ui.detail.DetailViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -21,9 +22,11 @@ object ProductDetailModule {
     @Provides
     fun detailViewModelProvider(
         getProductDetailUseCase: GetProductDetailUseCase,
+        getProductListSellerUseCase: GetProductListSellerUseCase,
         coroutineDispatcher: CoroutineDispatcher
     ) = DetailViewModel(
         getProductDetailUseCase,
+        getProductListSellerUseCase,
         ExceptionHandler(),
         coroutineDispatcher
     )
@@ -33,6 +36,12 @@ object ProductDetailModule {
     fun getProductDetailUseCaseProvider(
         productDetailRepository: ProductDetailRepository
     ) = GetProductDetailUseCase(productDetailRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun getProductListSellerUseCaseProvider(
+        productDetailRepository: ProductDetailRepository
+    ) = GetProductListSellerUseCase(productDetailRepository)
 
     @Provides
     @ViewModelScoped

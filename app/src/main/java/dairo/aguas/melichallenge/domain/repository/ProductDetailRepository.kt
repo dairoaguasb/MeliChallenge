@@ -9,5 +9,7 @@ interface ProductDetailRepository {
 
     fun getProductDetail(id: String): Flow<Result<ProductDetail>>
 
+    fun getProductDescription(id: String): Flow<Result<String>>
+
     fun getProductListSeller(sellerId: Int): Flow<Result<List<Product>>>
 }

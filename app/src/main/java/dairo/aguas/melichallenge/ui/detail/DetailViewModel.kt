@@ -31,11 +31,13 @@ class DetailViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(DetailState())
     val state: StateFlow<DetailState> = _state.asStateFlow()
-
     private val _productList = MutableStateFlow(emptyList<ProductViewData>())
     val productList: StateFlow<List<ProductViewData>> = _productList.asStateFlow()
+    private val _refresh: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val refresh: StateFlow<Boolean> = _refresh
 
     fun getProductDetail(id: String) {
+        _refresh.value = true
         getProductDetailUseCase.invoke(id).map { result ->
             result.fold(
                 onSuccess = { productDetail ->

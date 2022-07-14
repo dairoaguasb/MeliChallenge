@@ -1,6 +1,8 @@
 # MeliChallenge
 Desarrollo de una aplicación Android que se conecte al api de mercadolibre y muestre el listado de productos y al darle clic el usuario pueda navegar al detalle del producto.
 
+![picture](preview.gif)
+
 # Arquitectura
 MVVM + Clean Arquitecture
 

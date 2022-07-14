@@ -19,7 +19,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -50,8 +49,9 @@ fun DetailScreen(
     productId: String
 ) {
     val state by viewModel.state.collectAsState()
+    val refresh by viewModel.refresh.collectAsState()
 
-    LaunchedEffect(key1 = productId) {
+    if (refresh.not()) {
         viewModel.getProductDetail(productId)
     }
     Column(
@@ -80,7 +80,7 @@ fun DetailScreenState(detailState: DetailState) {
 }
 
 @Composable
-private fun ProductDetail(detailViewData: DetailViewData) {
+fun ProductDetail(detailViewData: DetailViewData) {
     Column {
         ProductQuantity(detailViewData)
         Text(
